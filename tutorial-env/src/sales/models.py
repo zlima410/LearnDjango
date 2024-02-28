@@ -10,7 +10,7 @@ class Position(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()
     price = models.FloatField(blank = True)
-    created = models.DateTimeField(blank = True)
+    created = models.DateTimeField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         self.price = self.product.price * self.quantity
@@ -41,7 +41,7 @@ class Sale(models.Model):
     def get_positions(self):
         return self.positions.all()
 
-class CSV(models.model):
+class CSV(models.Model):
     file_name = models.FileField(upload_to='csvs')
     activated = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
